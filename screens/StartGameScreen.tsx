@@ -3,11 +3,13 @@ import InstructionText from '@/components/ui/InstructionText';
 import Title from '@/components/ui/Title';
 import Colors from '@/constants/colors';
 import { useState } from 'react';
-import { Alert, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, TextInput, useWindowDimensions, View } from 'react-native';
 import PrimaryButton from '../components/ui/PrimaryButton';
 
 export default function StartGameScreen({ onPickedNumber }: any) {
     const [enteredNumber, setEnteredNumber] = useState('');
+
+    const { width, height } = useWindowDimensions();
 
     function numberInputHandler(enteredText: string) {
         setEnteredNumber(enteredText);
@@ -29,8 +31,10 @@ export default function StartGameScreen({ onPickedNumber }: any) {
         onPickedNumber(chosenNumber);
     }
 
+    const marginTopDistance = height < 400 ? 40 : 100;
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { marginTop: marginTopDistance }]}>
             <Title>Guess a Number</Title>
             <Card>
                 <InstructionText>Enter a Number</InstructionText>
@@ -56,10 +60,12 @@ export default function StartGameScreen({ onPickedNumber }: any) {
     );
 }
 
+// const deviceHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 100,
+        // marginTop: deviceHeight < 400 ? 40 : 100,
         alignItems: 'center',
     },
     guessInput: {

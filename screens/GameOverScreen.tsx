@@ -1,7 +1,7 @@
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import Title from '@/components/ui/Title';
 import Colors from '@/constants/colors';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 
 export default function GameOverScreen({ roundsPlayed, userNumber, onRestart }: any) {
     return (
@@ -19,6 +19,8 @@ export default function GameOverScreen({ roundsPlayed, userNumber, onRestart }: 
     );
 }
 
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -28,9 +30,9 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         overflow: 'hidden',
-        width: 200,
-        height: 200,
-        borderRadius: 100,
+        width: deviceWidth < 380 ? 150 : 200,
+        height: deviceWidth < 380 ? 150 : 200,
+        borderRadius: deviceWidth < 380 ? 75 : 100,
         borderWidth: 3,
         borderColor: Colors.primary800,
         margin: 36,

@@ -5,7 +5,7 @@ import InstructionText from '@/components/ui/InstructionText';
 import PrimaryButton from '@/components/ui/PrimaryButton';
 import Title from '@/components/ui/Title';
 import { useEffect, useState } from 'react';
-import { Alert, FlatList, StyleSheet, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 function generateRandomBetween(min: any, max: any, exclude: any) {
     const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -24,6 +24,7 @@ export default function GameScreen({ userNumber, onGameOver }: any) {
     const initialGuess = generateRandomBetween(1, 100, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
     const [guessRounds, setGuessRounds] = useState([initialGuess]);
+    const { width, height } = useWindowDimensions();
 
     useEffect(() => {
         if (currentGuess === userNumber) {
@@ -52,11 +53,18 @@ export default function GameScreen({ userNumber, onGameOver }: any) {
     }
 
     const guessRoundsListLength = guessRounds.length;
+    const marginTopDistance = height < 400 ? 0 : 0;
 
     return (
-        <View style={styles.container}>
-            <Title>I guess your number is:</Title>
-            <NumberContainer>{currentGuess}</NumberContainer>
+        <View style={[styles.container, { marginTop: marginTopDistance }]}>
+            <View style={styles.guessContainer}>
+                <View style={styles.guessContainerTitle}>
+                    <Title style={styles.title}>I guess your number is:</Title>
+                </View>
+                <View style={styles.guessContainerNumber}>
+                    <NumberContainer>{currentGuess}</NumberContainer>
+                </View>
+            </View>
             <Card>
                 <InstructionText style={styles.instructionText}>This number is </InstructionText>
                 <View style={styles.buttonsContainer}>
@@ -95,6 +103,26 @@ const styles = StyleSheet.create({
         padding: 54,
         alignItems: 'center',
     },
+    guessContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    guessContainerTitle: {
+        flex: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    guessContainerNumber: {
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+    },
+    title: {
+        marginTop: 54,
+        borderWidth: 0,
+    },
     instructionText: {
         fontSize: 18,
         marginHorizontal: 12,
@@ -107,7 +135,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     listContainer: {
-        flex: 1,
+        flex: 5,
         padding: 8,
         margin: 8,
     },
