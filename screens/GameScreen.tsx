@@ -24,7 +24,7 @@ export default function GameScreen({ userNumber, onGameOver }: any) {
     const initialGuess = generateRandomBetween(1, 100, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
     const [guessRounds, setGuessRounds] = useState([initialGuess]);
-    const { width, height } = useWindowDimensions();
+    const { height } = useWindowDimensions();
 
     useEffect(() => {
         if (currentGuess === userNumber) {
@@ -53,7 +53,7 @@ export default function GameScreen({ userNumber, onGameOver }: any) {
     }
 
     const guessRoundsListLength = guessRounds.length;
-    const marginTopDistance = height < 400 ? 0 : 0;
+    const marginTopDistance = height < 400 ? 20 : 20;
 
     return (
         <View style={[styles.container, { marginTop: marginTopDistance }]}>
@@ -81,6 +81,7 @@ export default function GameScreen({ userNumber, onGameOver }: any) {
                 </View>
                 <InstructionText style={styles.instructionText}>than my number </InstructionText>
             </Card>
+
             <View style={styles.listContainer}>
                 <FlatList
                     data={guessRounds}
@@ -100,22 +101,19 @@ export default function GameScreen({ userNumber, onGameOver }: any) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 54,
+        padding: 20,
         alignItems: 'center',
     },
     guessContainer: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
     guessContainerTitle: {
-        flex: 1,
         alignItems: 'flex-end',
         justifyContent: 'center',
     },
     guessContainerNumber: {
-        flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
     },
